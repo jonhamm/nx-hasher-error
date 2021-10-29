@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "projects": {
+    "hash-error": {
+      "projectType": "application",
+      "root": "apps/hash-error",
+      "sourceRoot": "apps/hash-error/src",
+      "prefix": "nx-hash-error",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/hash-error",
+            "index": "apps/hash-error/src/index.html",
+            "main": "apps/hash-error/src/main.ts",
+            "polyfills": "apps/hash-error/src/polyfills.ts",
+            "tsConfig": "apps/hash-error/tsconfig.app.json",
+            "assets": [
+              "apps/hash-error/src/favicon.ico",
+              "apps/hash-error/src/assets"
+            ],
+            "styles": ["apps/hash-error/src/styles.css"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/hash-error/src/environments/environment.ts",
+                  "with": "apps/hash-error/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "hash-error:build:production"
+            },
+            "development": {
+              "browserTarget": "hash-error:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "hash-error:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/hash-error/src/**/*.ts",
+              "apps/hash-error/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/hash-error"],
+          "options": {
+            "jestConfig": "apps/hash-error/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "hash-error-e2e": {
+      "root": "apps/hash-error-e2e",
+      "sourceRoot": "apps/hash-error-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/hash-error-e2e/cypress.json",
+            "devServerTarget": "hash-error:serve:development",
+            "tsConfig": "apps/hash-error-e2e/tsconfig.json"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "hash-error:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/hash-error-e2e/**/*.{js,ts}"]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": ["hash-error"]
+    }
+  }
+}
